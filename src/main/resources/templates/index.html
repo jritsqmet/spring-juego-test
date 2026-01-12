@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>🎮 CRUD de Videojuegos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f0c29;
+            --main-color: #302b63;
+            --accent-color: #24243e;
+            --neon-green: #00ff41;
+            --neon-red: #ff0058;
+            --neon-blue: #00aaff;
+            --text-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-color), var(--main-color), var(--accent-color));
+            color: var(--text-color);
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            color: var(--neon-green);
+            text-shadow: 0 0 10px var(--neon-green);
+            letter-spacing: -1px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(0, 20, 0, 0.4);
+            border: 1px solid var(--neon-green);
+            border-radius: 8px;
+        }
+
+        input {
+            padding: 8px;
+            background: #000;
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 8px var(--neon-green);
+        }
+
+        button {
+            background: var(--neon-red);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background: #ff003c;
+            transform: scale(1.05);
+            box-shadow: 0 0 12px var(--neon-red);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--neon-blue);
+        }
+
+        th {
+            background: rgba(0, 170, 255, 0.2);
+            color: var(--neon-blue);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.55rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            font-size: 0.85rem;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(0, 30, 60, 0.2);
+        }
+
+        .action-links a {
+            display: inline-block;
+            margin: 0 4px;
+            padding: 4px 8px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.45rem;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+
+        .edit-link {
+            background: var(--neon-green);
+            color: black;
+        }
+
+        .edit-link:hover {
+            background: #00cc33;
+            box-shadow: 0 0 8px var(--neon-green);
+        }
+
+        .delete-link {
+            background: var(--neon-red);
+            color: white;
+        }
+
+        .delete-link:hover {
+            background: #cc0044;
+            box-shadow: 0 0 8px var(--neon-red);
+        }
+
+        .edit-form {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(30, 0, 30, 0.5);
+            border: 1px solid var(--neon-red);
+            border-radius: 8px;
+        }
+
+        .edit-form h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            color: var(--neon-red);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .edit-form a {
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+        }
+
+        .edit-form a:hover {
+            text-shadow: 0 0 8px var(--neon-blue);
+        }
+
+        /* Consola H2 */
+        .console-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--neon-blue);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.5rem;
+            text-decoration: none;
+        }
+
+        .console-link:hover {
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1rem; }
+            th, td { font-size: 0.7rem; padding: 6px; }
+            button { font-size: 0.5rem; padding: 6px; }
+            input { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🕹️ VIDEOJUEGOS CRUD</h1>
+
+    <!-- Formulario para crear -->
+    <form th:action="@{/crear}" th:object="${nuevoVideojuego}" method="post">
+        <input type="text" th:field="*{nombre}" placeholder="Nombre" required maxlength="50"/>
+        <input type="text" th:field="*{genero}" placeholder="Género" required maxlength="30"/>
+        <input type="number" th:field="*{año}" placeholder="Año" required min="1970" max="2030"/>
+        <button type="submit">➕ AGREGAR</button>
+    </form>
+
+    <!-- Tabla de videojuegos -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>GÉNERO</th>
+                <th>AÑO</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="v : ${videojuegos}">
+                <td th:text="${v.id}"></td>
+                <td th:text="${v.nombre}"></td>
+                <td th:text="${v.genero}"></td>
+                <td th:text="${v.año}"></td>
+                <td class="action-links">
+                    <a th:href="@{/editar/{id}(id=${v.id})}" class="edit-link">✏️ EDITAR</a>
+                    <a th:href="@{/eliminar/{id}(id=${v.id})}"
+                       class="delete-link"
+                       onclick="return confirm('¿Eliminar este videojuego?')">🗑️ BORRAR</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Formulario de edición -->
+    <div th:if="${videojuegoEditar != null}" class="edit-form">
+        <h2>🔧 EDITAR VIDEOJUEGO</h2>
+        <form th:action="@{/actualizar}" th:object="${videojuegoEditar}" method="post">
+            <input type="hidden" th:field="*{id}" />
+            <input type="text" th:field="*{nombre}" required maxlength="50"/>
+            <input type="text" th:field="*{genero}" required maxlength="30"/>
+            <input type="number" th:field="*{año}" required min="1970" max="2030"/>
+            <button type="submit">✅ ACTUALIZAR</button>
+            <a href="/">❌ CANCELAR</a>
+        </form>
+    </div>
+
+   
+</div>
+
+</body>
+</html>
