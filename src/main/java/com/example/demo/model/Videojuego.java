@@ -16,15 +16,15 @@ public class Videojuego {
 
     private String nombre;
     private String genero;
-    private int año;
+    private int anio;
 
     // Constructores
     public Videojuego() {}
 
-    public Videojuego(String nombre, String genero, int año) {
+    public Videojuego(String nombre, String genero, int anio) {
         this.nombre = nombre;
         this.genero = genero;
-        this.año = año;
+        this.anio= anio;
     }
 
     // Getters y Setters
@@ -37,6 +37,6 @@ public class Videojuego {
     public String getGenero() { return genero; }
     public void setGenero(String genero) { this.genero = genero; }
 
-    public int getAño() { return año; }
-    public void setAño(int año) { this.año = año; }
+    public int getAnio() { return anio; }
+    public void setAnio(int anio) { this.anio = anio; }
 }
