@@ -214,7 +214,7 @@
     <form th:action="@{/crear}" th:object="${nuevoVideojuego}" method="post">
         <input type="text" th:field="*{nombre}" placeholder="Nombre" required maxlength="50"/>
         <input type="text" th:field="*{genero}" placeholder="Género" required maxlength="30"/>
-        <input type="number" th:field="*{año}" placeholder="Año" required min="1970" max="2030"/>
+        <input type="number" th:field="*{anio}" placeholder="Año" required min="1970" max="2030"/>
         <button type="submit">➕ AGREGAR</button>
     </form>
 
@@ -234,7 +234,7 @@
                 <td th:text="${v.id}"></td>
                 <td th:text="${v.nombre}"></td>
                 <td th:text="${v.genero}"></td>
-                <td th:text="${v.año}"></td>
+                <td th:text="${v.anio}"></td>
                 <td class="action-links">
                     <a th:href="@{/editar/{id}(id=${v.id})}" class="edit-link">✏️ EDITAR</a>
                     <a th:href="@{/eliminar/{id}(id=${v.id})}"
@@ -252,7 +252,7 @@
             <input type="hidden" th:field="*{id}" />
             <input type="text" th:field="*{nombre}" required maxlength="50"/>
             <input type="text" th:field="*{genero}" required maxlength="30"/>
-            <input type="number" th:field="*{año}" required min="1970" max="2030"/>
+            <input type="number" th:field="*{anio}" required min="1970" max="2030"/>
             <button type="submit">✅ ACTUALIZAR</button>
             <a href="/">❌ CANCELAR</a>
         </form>
